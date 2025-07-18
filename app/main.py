@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Depends
 from typing import Optional
 from datetime import date
 from pydantic import BaseModel
@@ -18,30 +18,38 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to FastAPI!"}
 
+
 class SItems(BaseModel):
     name: str
     descr: str
     stars: int
 
 
+class SItemSearchArgs:
+    def __init__(
+            self,
+            author: str,
+            date_from: date,
+            date_to: date,
+            view: Optional[int] = None,
+            stars: Optional[int] = Query(None, ge=1, le=5),
+    ):
+        self.author = author
+        self.date_from = date_from
+        self.date_to = date_to
+        self.view = view
+        self.stars = stars
+
+
 @app.get('/items')
 def get_items(
-        author: str,
-        date_from: date,
-        date_to: date,
-        view: Optional[int] = None,
-        stars: Optional[int] = Query(None, ge=1, le=5),
+       search_args: SItemSearchArgs = Depends()
 ):
     "Optional - не обязательный параметр"
     "Query - Ограничение от 1 до 5 "
-    items = [
-        {
-            'name': 'how',
-            'descr': 'aawdawda',
-            'stars': 5
-        }
-    ]
-    return f"item: "
+    "SItemSearchArgs - все параметры в отдельном классе"
+
+    return search_args
 
 
 class SCategory(BaseModel):
