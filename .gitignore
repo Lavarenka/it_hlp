@@ -1,0 +1,24 @@
+/venv/Lib/site-packages/pip/_vendor/packaging/__about__.py
+
+# Virtual environment
+.venv/
+venv/
+
+# Python cache and build files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Other common ignores
+.DS_Store
+.idea/
+.vscode/
