@@ -18,6 +18,11 @@ app = FastAPI()
 def read_root():
     return {"message": "Welcome to FastAPI!"}
 
+class SItems(BaseModel):
+    name: str
+    descr: str
+    stars: int
+
 
 @app.get('/items')
 def get_items(
@@ -29,18 +34,25 @@ def get_items(
 ):
     "Optional - не обязательный параметр"
     "Query - Ограничение от 1 до 5 "
+    items = [
+        {
+            'name': 'how',
+            'descr': 'aawdawda',
+            'stars': 5
+        }
+    ]
     return f"item: "
+
 
 class SCategory(BaseModel):
     cat_id: int
     name: str
     description: str
 
+
 @app.post("/category")
 def add_category(category: SCategory):
     pass
-
-
 
 
 if __name__ == "__main__":
